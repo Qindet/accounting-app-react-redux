@@ -1,0 +1,10 @@
+.Main {
+    position: relative;
+   margin-top: 2rem;
+}
+
+.Btn {
+    position: absolute;
+    bottom: -50px;
+    right: 150px;
+}
