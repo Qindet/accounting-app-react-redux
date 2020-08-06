@@ -5,12 +5,13 @@ import TableUI from "../UI/table-ui";
 import Container from '@material-ui/core/Container';
 import ModalUI from "../UI/modal-ui";
 
-const Income = () => {
+const Income = (props) => {
+
     return (
         <Container className={classes.Main}>
-                <TableUI />
+                <TableUI items={props.items}/>
             <div className={classes.Btn}>
-                <ModalUI />
+                <ModalUI addIncome={props.addIncome}/>
             </div>
 
         </Container>
