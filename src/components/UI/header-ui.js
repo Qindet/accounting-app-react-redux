@@ -6,6 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
+import MenuButtonUI from "./menu-button-ui";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -16,10 +17,11 @@ const useStyles = makeStyles((theme) => ({
     },
     title: {
         flexGrow: 1,
+        marginLeft: '50px'
     },
     backgroundColor: {
         backgroundColor: '#16a085',
-    }
+    },
 }));
 
 export default function Header() {
@@ -29,9 +31,9 @@ export default function Header() {
         <div className={classes.root} >
             <AppBar position="static" className={classes.backgroundColor}>
                 <Toolbar>
-                    <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-                        <MenuIcon />
-                    </IconButton>
+
+                       <MenuButtonUI/>
+
                     <Typography variant="h6" className={classes.title}>
                         Accounting app
                     </Typography>

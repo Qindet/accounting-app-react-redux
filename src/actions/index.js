@@ -1,5 +1,11 @@
-import {addIncome} from './income'
+import {addIncome,addExpense,updateIncome, deleteIncome,
+updateExpense,deleteExpense} from './money-operations'
 
 export {
-    addIncome
+    addIncome,
+    addExpense,
+    updateIncome,
+    deleteIncome,
+    updateExpense,
+    deleteExpense
 }

@@ -14,6 +14,9 @@ import FirstPageIcon from '@material-ui/icons/FirstPage';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import LastPageIcon from '@material-ui/icons/LastPage';
+import DeleteIcon from '@material-ui/icons/Delete';
+import  './styles.css'
+import ModalUI from "./modal-ui";
 
 const useStyles1 = makeStyles((theme) => ({
     root: {
@@ -80,17 +83,17 @@ TablePaginationActions.propTypes = {
     rowsPerPage: PropTypes.number.isRequired,
 };
 
-function createData(name, calories, fat) {
-    return { name, calories, fat };
-}
 
 
 
 const useStyles2 = makeStyles({
     table: {
-        maxWidth: 700,
+        maxWidth: 750,
         margin:' 5rem auto',
     },
+    th: {
+        textAlign: 'right'
+    }
 });
 
 export default function TableUI(props) {
@@ -113,21 +116,47 @@ export default function TableUI(props) {
     return (
         <TableContainer component={Paper}>
             <Table className={classes.table} aria-label="custom pagination table">
+
                 <TableBody>
+                    <TableRow>
+                        <TableCell component="th" scope="row">
+                            {props.label}
+                        </TableCell>
+                        <TableCell component="th" scope="right" className={classes.th}>
+                            Value
+                        </TableCell>
+                        <TableCell  component="th" scope="right" className={classes.th}>
+                            Date
+                        </TableCell>
+                        <TableCell component="th" align="right">
+                            Update
+                        </TableCell>
+                        <TableCell component="th" align="right">
+                            Delete
+                        </TableCell>
+                    </TableRow>
                     {(rowsPerPage > 0
                             ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                             : rows
                     ).map((row) => (
                         <TableRow key={Math.random()}>
-                            <TableCell component="th" scope="row">
+                            <TableCell component="td" scope="right">
                                 {row.name}
                             </TableCell>
                             <TableCell style={{ width: 160 }} align="right">
-                                {row.value}
+                                {row.value} rub
                             </TableCell>
                             <TableCell style={{ width: 160 }} align="right">
                                 {row.date}
                             </TableCell>
+                            <TableCell component="td" align="right">
+                                    <ModalUI name="update" item={row} type="update" label={props.label}/>
+                            </TableCell>
+                            <TableCell component="td" align="right">
+                            <IconButton  aria-label="delete" onClick={() =>  props.deleteIncome(row.id)}>
+                                <DeleteIcon fontSize="large" />
+                            </IconButton>
+                        </TableCell>
                         </TableRow>
                     ))}
 

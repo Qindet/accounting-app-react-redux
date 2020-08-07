@@ -1,6 +1,7 @@
 import {combineReducers} from 'redux'
-import incomeReducer from "./income";
+import moneyReducer from "./money-operations";
+
 
 // const reducer = combineReducers({incomeReducer})
-const reducer = incomeReducer
+const reducer = moneyReducer
 export default reducer

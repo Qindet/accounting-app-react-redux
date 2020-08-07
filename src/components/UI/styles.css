@@ -1,0 +1,20 @@
+#customized-menu span {
+    color: black;
+    line-height: unset;
+}
+
+a {
+    text-decoration: none;
+}
+
+th {
+    cursor: pointer;
+}
+
+td button {
+    cursor: pointer;
+}
+
+tr:hover {
+    opacity: 0.6;
+}
