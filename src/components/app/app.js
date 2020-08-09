@@ -2,9 +2,9 @@ import React, {Fragment} from "react";
 import {Route,Switch,Redirect} from 'react-router-dom'
 import Header from "../UI/header-ui";
 import classes from './app.css'
-import DashboardContainer from "../../containers/dashboard-container";
 import Income from "../../components/income";
 import Expense from "../expense/expense";
+import Dashboard from "../dashboard";
 
 const App = () => {
 
@@ -12,7 +12,7 @@ const App = () => {
         <Fragment>
             <Header />
             <Switch>
-                <Route path="/" component={DashboardContainer} exact/>
+                <Route path="/" component={Dashboard} exact/>
                 <Route path='/income' component={Income}/>
                 <Route path='/expense' component={Expense}/>
                 <Redirect to="/"/>

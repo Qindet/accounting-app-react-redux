@@ -1,0 +1,14 @@
+.Main {
+    min-width:400px;
+   max-height: 200px;
+    background-color: #FDD835;
+    display: flex;
+    justify-content: center;
+    margin-right: 100px;
+}
+
+.Balance {
+    font-size: 24px;
+    align-self: center;
+    font-family: "Roboto", sans-serif ;
+}

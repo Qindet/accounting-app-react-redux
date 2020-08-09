@@ -32,6 +32,10 @@ const useStyles = makeStyles((theme) => ({
         position: 'absolute',
         bottom: '70px',
         right: '20px'
+    },
+    error: {
+        color: 'red',
+        marginTop: '5px'
     }
 }));
 
@@ -41,7 +45,8 @@ function ModalUI(props) {
     const [modal,setModal] = React.useState({
         name: '',
         value: '',
-        id: null
+        id: null,
+        label:false
     })
 
     useEffect(() => {
@@ -60,20 +65,26 @@ function ModalUI(props) {
     };
 
     const onSubmitAction = (e,add,update) => {
+        e.preventDefault()
+        if (!(modal.value.trim()) || !(modal.name.trim())) {
+            return
+        }
         if (props.type === 'submit') {
-            e.preventDefault()
-            if (!(modal.value.trim()) || !(modal.name.trim())) {
-                return
-            } else {
-                add({...modal,date: new Date().toDateString(),id: Math.floor(Math.random()*1000000)})
-                setModal({...modal,name:'', value:'', id: null})
-            }
+                if (props.label === 'spending' && modal.value > props.balance) {
+                    setModal({...modal, label:true})
+                } else {
+                    add({...modal,date: new Date().toDateString(),id: Math.floor(Math.random()*1000000)})
+                    setModal({...modal,name:'', value:'', id: null, label:false})
+                }
         } else if (props.type === 'update') {
-            e.preventDefault()
-            update(modal.id,{...modal,date: new Date().toDateString()})
+            if (props.label === 'spending' && modal.value > props.balance) {
+                setModal({...modal, label:true})
+            } else {
+                update(modal.id,{...modal,date: new Date().toDateString()})
+                setModal({...modal,label:false})
+            }
         }
     }
-
 
     return (
         <div>
@@ -95,9 +106,7 @@ function ModalUI(props) {
                 <Fade in={open}>
                     <form className={classes.paper}
                     onSubmit={(e) => {
-                        console.log(props.label)
                         if (props.label==='spending') {
-
                            onSubmitAction(e,props.addExpense,props.updateExpense)
                         } else {
                             onSubmitAction(e,props.addIncome,props.updateIncome)
@@ -111,19 +120,24 @@ function ModalUI(props) {
 
                         <InputLabel children="value (rub)" className={classes.input}/>
                         <Input type='number' value={modal.value} onChange={(event => setModal({...modal,value:event.target.value}))}/>
-
+                        <br/>
+                        {modal.label?<div className={classes.error}>Not enough money</div>: null}
                         <Button type="submit" variant="outlined" color="primary"
                                 className={classes.button}
                         >
                             {props.type==="submit"?'Submit':'Update'}
                         </Button>
-
-
                     </form>
                 </Fade>
             </Modal>
         </div>
     );
+}
+
+const mapStateToProps = (state) => {
+    return {
+        balance: state.balance
+    }
 }
 
 const mapDispatchToProps = (dispatch) => {
@@ -135,4 +149,4 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-export default connect(null,mapDispatchToProps)(ModalUI)
+export default connect(mapStateToProps,mapDispatchToProps)(ModalUI)

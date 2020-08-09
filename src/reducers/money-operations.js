@@ -1,7 +1,8 @@
+
 const initialState = {
-    balance: null,
-    incomeItems: [{name:'Dima', value: 300, date: '01.02.02',id: 1}],
-    expenseItems: [{name:'Dima', value: 300, date: '01.02.02', id: 1}],
+    incomeItems: [],
+    expenseItems: [],
+    balance: 0
 }
 
 function updateList(itemList,action,type) {
@@ -18,43 +19,52 @@ function updateList(itemList,action,type) {
         const items = [...itemList.slice(0,index),
             ...itemList.slice(index+1)]
         return items
+    } else if (type === 'add') {
+        return [...itemList,action.payload]
     }
 }
 
+function updateBalance(incomes, expenses) {
+    return incomes.reduce((s,item)=>s+Number(item.value),0) - expenses.reduce((s,item)=>s+Number(item.value),0)
+}
 
 export default function moneyReducer(state=initialState,action) {
-    let items
-    let index
     switch (action.type) {
         case 'ADD_INCOME':
             return {
                 ...state,
-                incomeItems: [...state.incomeItems,action.payload]
+                incomeItems: updateList(state.incomeItems,action,'add'),
+                balance: updateBalance(updateList(state.incomeItems,action,'add'),state.expenseItems)
             }
         case 'ADD_EXPENSE':
             return {
                 ...state,
-                expenseItems: [...state.expenseItems,action.payload]
+                expenseItems:updateList(state.expenseItems,action,'add'),
+                balance: updateBalance(state.incomeItems,updateList(state.expenseItems,action,'add'))
             }
         case 'UPDATE_INCOME':
             return {
                 ...state,
-                incomeItems: updateList(state.incomeItems,action,'update')
+                incomeItems: updateList(state.incomeItems,action,'update'),
+                balance: updateBalance(updateList(state.incomeItems,action,'update'),state.expenseItems)
             }
         case 'DELETE_INCOME':
             return {
                 ...state,
-                incomeItems: updateList(state.incomeItems,action,'delete')
+                incomeItems: updateList(state.incomeItems,action,'delete'),
+                balance: updateBalance(updateList(state.incomeItems,action,'delete'),state.expenseItems)
             }
         case 'UPDATE_EXPENSE':
             return {
                 ...state,
-                expenseItems: updateList(state.expenseItems,action, 'update')
+                expenseItems:  updateList(state.expenseItems,action, 'update'),
+                balance: updateBalance(state.incomeItems, updateList(state.expenseItems,action,'update'))
             }
         case 'DELETE_EXPENSE':
             return {
                 ...state,
-                expenseItems: updateList(state.expenseItems,action, 'delete')
+                expenseItems: updateList(state.expenseItems,action, 'delete'),
+                balance: updateBalance(state.incomeItems,updateList(state.expenseItems,action,'delete'))
             }
         default: {
             return state
