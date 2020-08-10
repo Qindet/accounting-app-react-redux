@@ -9,7 +9,9 @@ import {connect} from 'react-redux'
 
 const useStyles = makeStyles((theme) => ({
     root: {
-       minWidth: '450px'
+       minWidth: '450px',
+        marginTop: '5%',
+
     },
     heading: {
         fontSize: theme.typography.pxToRem(15),
@@ -31,7 +33,10 @@ function AccordionList(props) {
                 </AccordionSummary>
                 <AccordionDetails>
                     <Typography>
-                            {props.incomeItems.map((item) => `${item.value} rub from ${item.name} at ${item.date}`)}
+                        <ul>
+                            {props.incomeItems.map((item) =><li>{item.value} rub from {item.name} at {item.date}</li> )}
+                        </ul>
+
                     </Typography>
                 </AccordionDetails>
             </Accordion>
@@ -45,7 +50,10 @@ function AccordionList(props) {
                 </AccordionSummary>
                 <AccordionDetails>
                     <Typography>
-                        {props.expenseItems.map((item) => `${item.value} rub spend ${item.name} at ${item.date}`)}
+                        <ul>
+                            {props.expenseItems.map((item) =><li>{item.value} rub spend {item.name} at {item.date}</li> )}
+                        </ul>
+
                     </Typography>
                 </AccordionDetails>
             </Accordion>

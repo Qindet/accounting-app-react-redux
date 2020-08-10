@@ -1,10 +1,14 @@
 .Main {
-    min-width:400px;
+    min-width:300px;
    max-height: 200px;
     background-color: #FDD835;
     display: flex;
     justify-content: center;
     margin-right: 100px;
+    margin-top: 5%;
+}
+.Main:hover {
+    opacity: 0.7;
 }
 
 .Balance {

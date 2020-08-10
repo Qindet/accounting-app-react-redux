@@ -37,6 +37,32 @@ const deleteExpense = (payload) => {
     }
 }
 
+const addGoal = (name,cost) => {
+    return{
+        type: 'ADD_GOAL',
+        name,
+        cost
+    }
+}
+
+const incomesRequested = () => {
+    return{
+        type: 'FETCH_INCOMES_REQUESTED'
+    }
+}
+
+const incomesLoaded = (items) => {
+    return{
+        type: 'FETCH_INCOMES_LOADED',
+        items
+    }
+}
+
+const incomesFailed = () => {
+    return{
+        type: 'FETCH_INCOMES_FAILED'
+    }
+}
 
 export {
     addIncome,
@@ -44,5 +70,9 @@ export {
     updateIncome,
     deleteIncome,
     updateExpense,
-    deleteExpense
+    deleteExpense,
+    addGoal,
+    incomesRequested,
+    incomesLoaded,
+    incomesFailed
 }

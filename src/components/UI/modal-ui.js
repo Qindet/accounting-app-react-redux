@@ -109,6 +109,7 @@ function ModalUI(props) {
                         if (props.label==='spending') {
                            onSubmitAction(e,props.addExpense,props.updateExpense)
                         } else {
+
                             onSubmitAction(e,props.addIncome,props.updateIncome)
                         }
                     }}

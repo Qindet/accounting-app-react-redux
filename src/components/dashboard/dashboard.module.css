@@ -1,7 +1,13 @@
 .Dash {
-   margin: 10%;
+   margin: 5%;
     min-height: 600px;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+
+    background: linear-gradient(45deg, #EECFBA, #CAE4D8);
+}
+
+.Text {
+ text-align: center;
 }

@@ -2,7 +2,11 @@
 const initialState = {
     incomeItems: [],
     expenseItems: [],
-    balance: 0
+    balance: 0,
+    nameOfGoal: '',
+    costOfGoal: 0,
+    loading: true,
+    error: false
 }
 
 function updateList(itemList,action,type) {
@@ -65,6 +69,31 @@ export default function moneyReducer(state=initialState,action) {
                 ...state,
                 expenseItems: updateList(state.expenseItems,action, 'delete'),
                 balance: updateBalance(state.incomeItems,updateList(state.expenseItems,action,'delete'))
+            }
+        case 'ADD_GOAL':
+            return {
+                ...state,
+                nameOfGoal: action.name,
+                costOfGoal: action.cost
+            }
+
+        case 'FETCH_INCOMES_REQUESTED':
+            return {
+                ...state,
+                loading: true,
+                error: false
+            }
+        case 'FETCH_INCOMES_LOADED':
+            return {
+                ...state,
+                loading: false,
+                error: false
+            }
+        case 'FETCH_INCOMES_FAILED':
+            return {
+                ...state,
+                loading: false,
+                error: true
             }
         default: {
             return state
