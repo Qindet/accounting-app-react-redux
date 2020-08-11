@@ -1,3 +1,7 @@
+import AccountingService from "../service";
+const service = new AccountingService()
+
+
 const addIncome = (payload) => {
     return {
         type: 'ADD_INCOME',
@@ -45,6 +49,9 @@ const addGoal = (name,cost) => {
     }
 }
 
+
+
+
 const incomesRequested = () => {
     return{
         type: 'FETCH_INCOMES_REQUESTED'
@@ -64,6 +71,27 @@ const incomesFailed = () => {
     }
 }
 
+const fetchIncomes = () => (dispatch) => {
+    let items=[]
+    dispatch(incomesRequested())
+    service.getIncomes().then((itemsData) => {
+          Object.keys(itemsData.data).forEach(item=>items.push(itemsData.data[item]))
+          dispatch(incomesLoaded(items))
+    })
+        .catch((e)=>dispatch(incomesFailed(e)))
+}
+
+const loadIncome = (item) => (dispatch) => {
+    dispatch(incomesRequested())
+    service.postIncome(item).then((response) => dispatch(addIncome({...item, id:response.data.name})))
+        .catch((e) => dispatch(incomesFailed(e)))
+}
+
+const loadUpdatedIncome = (item,id) => (dispatch) => {
+    console.log(item)
+}
+
+
 export {
     addIncome,
     addExpense,
@@ -72,7 +100,7 @@ export {
     updateExpense,
     deleteExpense,
     addGoal,
-    incomesRequested,
-    incomesLoaded,
-    incomesFailed
+    fetchIncomes,
+    loadIncome,
+    loadUpdatedIncome
 }

@@ -5,6 +5,7 @@ import {BrowserRouter} from "react-router-dom";
 import {createStore,compose,applyMiddleware} from 'redux'
 import {Provider} from 'react-redux'
 import reducer from "./reducers";
+import thunk from 'redux-thunk'
 
 const composeEnhancers =
     typeof window === 'object' &&
@@ -13,14 +14,10 @@ const composeEnhancers =
             // Specify extension’s options like name, actionsBlacklist, actionsCreators, serialize...
         }) : compose;
 
-const logger = store => next=>action => {
-    const result = next(action)
-    console.log('sf', store.getState())
-    return result
-}
 
 
-const store = createStore(reducer, composeEnhancers(applyMiddleware(logger)))
+
+const store = createStore(reducer, composeEnhancers(applyMiddleware(thunk)))
 window.store=store
 ReactDOM.render(
     <Provider store={store}>

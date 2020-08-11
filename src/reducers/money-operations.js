@@ -37,6 +37,7 @@ export default function moneyReducer(state=initialState,action) {
         case 'ADD_INCOME':
             return {
                 ...state,
+                loading: false,
                 incomeItems: updateList(state.incomeItems,action,'add'),
                 balance: updateBalance(updateList(state.incomeItems,action,'add'),state.expenseItems)
             }
@@ -49,6 +50,7 @@ export default function moneyReducer(state=initialState,action) {
         case 'UPDATE_INCOME':
             return {
                 ...state,
+                loading: false,
                 incomeItems: updateList(state.incomeItems,action,'update'),
                 balance: updateBalance(updateList(state.incomeItems,action,'update'),state.expenseItems)
             }
@@ -86,6 +88,7 @@ export default function moneyReducer(state=initialState,action) {
         case 'FETCH_INCOMES_LOADED':
             return {
                 ...state,
+                incomeItems: action.items,
                 loading: false,
                 error: false
             }
