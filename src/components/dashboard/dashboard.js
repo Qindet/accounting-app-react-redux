@@ -1,11 +1,15 @@
-import React from "react";
+import React, {useEffect} from "react";
 import classes from './dashboard.module.css'
 import Balance from "../balance/balance";
 import AccordionList from "../UI/accordion";
 import Planning from "../planning";
+import {fetchIncomes} from "../../actions";
+import {connect} from 'react-redux'
 
-const Dashboard = () => {
-
+const Dashboard = (props) => {
+    useEffect(() => {
+        props.fetchIncomes()
+    },[])
 
     return (
         <div>
@@ -20,5 +24,11 @@ const Dashboard = () => {
     )
 }
 
+const mapDispatchToProps = (dispatch) => {
+    return {
+        fetchIncomes: () => dispatch(fetchIncomes())
+    }
+}
 
-export default Dashboard
+
+export default connect(null,mapDispatchToProps)(Dashboard)

@@ -57,6 +57,7 @@ export default function moneyReducer(state=initialState,action) {
         case 'DELETE_INCOME':
             return {
                 ...state,
+                loading: false,
                 incomeItems: updateList(state.incomeItems,action,'delete'),
                 balance: updateBalance(updateList(state.incomeItems,action,'delete'),state.expenseItems)
             }

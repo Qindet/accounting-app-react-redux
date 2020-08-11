@@ -1,7 +1,7 @@
 import {addIncome,addExpense,updateIncome, deleteIncome,
 updateExpense,deleteExpense,addGoal,
 fetchIncomes,
-loadIncome,loadUpdatedIncome} from './money-operations'
+loadIncome,loadUpdatedIncome,loadDeletedIncome} from './money-operations'
 
 export {
     addIncome,
@@ -13,5 +13,6 @@ export {
     addGoal,
     fetchIncomes,
     loadIncome,
-    loadUpdatedIncome
+    loadUpdatedIncome,
+    loadDeletedIncome
 }

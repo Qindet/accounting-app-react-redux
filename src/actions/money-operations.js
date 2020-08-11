@@ -1,4 +1,5 @@
 import AccountingService from "../service";
+import {withMobileDialog} from "@material-ui/core";
 const service = new AccountingService()
 
 
@@ -75,7 +76,7 @@ const fetchIncomes = () => (dispatch) => {
     let items=[]
     dispatch(incomesRequested())
     service.getIncomes().then((itemsData) => {
-          Object.keys(itemsData.data).forEach(item=>items.push(itemsData.data[item]))
+          Object.keys(itemsData.data).forEach(item=>items.push({...itemsData.data[item],id:item}))
           dispatch(incomesLoaded(items))
     })
         .catch((e)=>dispatch(incomesFailed(e)))
@@ -87,9 +88,19 @@ const loadIncome = (item) => (dispatch) => {
         .catch((e) => dispatch(incomesFailed(e)))
 }
 
-const loadUpdatedIncome = (item,id) => (dispatch) => {
-    console.log(item)
+const loadUpdatedIncome = (id,item) => (dispatch) => {
+    dispatch(incomesRequested())
+    service.putIncome(id,item).then((response) => dispatch(updateIncome(id,item)))
+        .catch((e) => dispatch(incomesFailed(e)))
 }
+
+const loadDeletedIncome = (id) => (dispatch) => {
+    dispatch(incomesRequested())
+    service.deleteIncome(id).then((response) => dispatch(deleteIncome(id)))
+        .catch((e) => dispatch(incomesFailed(e)))
+}
+
+
 
 
 export {
@@ -102,5 +113,6 @@ export {
     addGoal,
     fetchIncomes,
     loadIncome,
-    loadUpdatedIncome
+    loadUpdatedIncome,
+    loadDeletedIncome
 }

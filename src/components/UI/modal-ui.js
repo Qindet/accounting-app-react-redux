@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
@@ -7,7 +7,7 @@ import Button from '@material-ui/core/Button';
 import {Input} from "@material-ui/core";
 import { InputLabel } from '@material-ui/core';
 import {connect} from 'react-redux'
-import {addExpense, addIncome, loadIncome, updateExpense, updateIncome} from "../../actions/money-operations";
+import {addExpense, addIncome, loadIncome, updateExpense, loadUpdatedIncome} from "../../actions/money-operations";
 
 const useStyles = makeStyles((theme) => ({
     modal: {
@@ -51,7 +51,11 @@ function ModalUI(props) {
     })
 
 
-
+    useEffect(() => {
+        if (props.item) {
+            setModal({...modal,name:props.item.name,value:props.item.value, id: props.item.id,date: new Date().toDateString()})
+        }
+    }, [props.item])
 
     const handleOpen = () => {
         setOpen(true);
@@ -60,8 +64,7 @@ function ModalUI(props) {
     const handleClose = () => {
         setOpen(false);
     };
-
-    const onSubmitAction = (e,{loadIncome,updateIncome}) => {
+    const onSubmitAction = (e,{loadIncome,loadUpdatedIncome}) => {
         e.preventDefault()
         if (!(modal.value.trim()) || !(modal.name.trim())) {
             return
@@ -77,7 +80,7 @@ function ModalUI(props) {
             if (props.label === 'spending' && modal.value > props.balance) {
                 setModal({...modal, label:true})
             } else {
-                updateIncome(modal.id,modal)
+                loadUpdatedIncome(modal.id,modal)
                 setModal({...modal,label:false})
             }
         }
@@ -142,8 +145,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        addIncome: (item) => dispatch(addIncome(item)),
-        updateIncome: (id,item) => dispatch(updateIncome(id,item)),
+        loadUpdatedIncome: (id,item) => dispatch(loadUpdatedIncome(id,item)),
         addExpense: (item) => dispatch(addExpense(item)),
         updateExpense: (id,item) => dispatch(updateExpense(id,item)),
         loadIncome: (item) => dispatch(loadIncome(item))

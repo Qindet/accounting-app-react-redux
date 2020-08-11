@@ -10,7 +10,6 @@ export default class AccountingService {
         if (res.status !== 200) {
             throw new Error('Something went wrong')
         }
-        console.log(res)
         return res
     }
 
@@ -22,8 +21,20 @@ export default class AccountingService {
         return res
     }
 
-    putIncome = async (id) => {
-        const res = await axios.put(`${this._URL}/incomes/${id}.json`)
-        console.log(res)
+    putIncome = async (id,item) => {
+        const res = await axios.put(`${this._URL}/incomes/${id}.json`,item)
+        if (res.status !== 200) {
+            throw new Error('Something went wrong')
+        }
+        return res
     }
+
+    deleteIncome = async (id) => {
+        const res = await axios.delete(`${this._URL}/incomes/${id}.json`)
+        if (res.status !== 200) {
+            throw new Error('Something went wrong')
+        }
+        return res
+    }
+
 }

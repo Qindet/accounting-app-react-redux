@@ -1,7 +1,7 @@
 import React, {useEffect} from "react";
 import {connect} from 'react-redux'
 import TableUI from "../components/UI/table-ui";
-import {deleteIncome} from "../actions";
+import {loadDeletedIncome} from "../actions";
 import {fetchIncomes} from "../actions/money-operations";
 import Spinner from "../components/spinner";
 
@@ -15,7 +15,7 @@ const IncomeContentContainer = (props) => {
     }
     return (
         <div>
-            <TableUI items={props.incomeItems} deleteIncome={props.deleteIncome} label="From" type="Income"/>
+            <TableUI items={props.incomeItems} deleteIncome={props.loadDeletedIncome} label="From" type="Income"/>
         </div>
     )
 }
@@ -29,8 +29,8 @@ const mapStateToProps = ({incomeItems,loading}) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        deleteIncome: (id) => dispatch(deleteIncome(id)),
-        fetchIncomes: () => dispatch(fetchIncomes())
+        fetchIncomes: () => dispatch(fetchIncomes()),
+        loadDeletedIncome: (id) => dispatch(loadDeletedIncome(id))
     }
 }
 
