@@ -6,7 +6,9 @@ const initialState = {
     nameOfGoal: '',
     costOfGoal: 0,
     loading: true,
-    error: false
+    error: false,
+    loadingExpense: true,
+    errorExpense: false
 }
 
 function updateList(itemList,action,type) {
@@ -44,6 +46,7 @@ export default function moneyReducer(state=initialState,action) {
         case 'ADD_EXPENSE':
             return {
                 ...state,
+                loadingExpense: false,
                 expenseItems:updateList(state.expenseItems,action,'add'),
                 balance: updateBalance(state.incomeItems,updateList(state.expenseItems,action,'add'))
             }
@@ -64,12 +67,14 @@ export default function moneyReducer(state=initialState,action) {
         case 'UPDATE_EXPENSE':
             return {
                 ...state,
+                loadingExpense: false,
                 expenseItems:  updateList(state.expenseItems,action, 'update'),
                 balance: updateBalance(state.incomeItems, updateList(state.expenseItems,action,'update'))
             }
         case 'DELETE_EXPENSE':
             return {
                 ...state,
+                loadingExpense: false,
                 expenseItems: updateList(state.expenseItems,action, 'delete'),
                 balance: updateBalance(state.incomeItems,updateList(state.expenseItems,action,'delete'))
             }
@@ -99,6 +104,31 @@ export default function moneyReducer(state=initialState,action) {
                 loading: false,
                 error: true
             }
+
+
+        case 'FETCH_EXPENSES_REQUESTED':
+            return {
+                ...state,
+                loadingExpense: true,
+                errorExpenses: false
+            }
+        case 'FETCH_EXPENSES_LOADED':
+            return {
+                ...state,
+                expenseItems: action.items,
+                loadingExpense: false,
+                errorExpense: false
+            }
+        case 'FETCH_EXPENSES_FAILED':
+            return {
+                ...state,
+                loadingExpense: false,
+                errorExpense: true
+            }
+
+
+
+
         default: {
             return state
         }

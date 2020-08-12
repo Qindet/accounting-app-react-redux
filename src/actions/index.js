@@ -1,18 +1,14 @@
-import {addIncome,addExpense,updateIncome, deleteIncome,
-updateExpense,deleteExpense,addGoal,
-fetchIncomes,
-loadIncome,loadUpdatedIncome,loadDeletedIncome} from './money-operations'
-
+import {addGoal} from './money-operations'
+import {loadUpdatedIncome,loadDeletedIncome,fetchIncomes, loadIncome} from './income'
+import {loadUpdatedExpense,loadDeletedExpense,loadExpense,fetchExpenses} from './expense'
 export {
-    addIncome,
-    addExpense,
-    updateIncome,
-    deleteIncome,
-    updateExpense,
-    deleteExpense,
     addGoal,
     fetchIncomes,
-    loadIncome,
     loadUpdatedIncome,
-    loadDeletedIncome
+    loadDeletedIncome,
+    loadIncome,
+    loadExpense,
+    loadDeletedExpense,
+    loadUpdatedExpense,
+    fetchExpenses
 }

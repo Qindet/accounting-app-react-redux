@@ -5,32 +5,34 @@ export default class AccountingService {
         this._URL=process.env.REACT_APP_DB_URL
     }
 
-    postIncome = async (data) => {
-        const res = await axios.post(`${this._URL}/incomes.json`,data)
+    postData = async (data,type) => {
+
+        const res = await axios.post(`${this._URL}/${type}.json`,data)
         if (res.status !== 200) {
             throw new Error('Something went wrong')
         }
         return res
     }
+    getData = async (type) => {
 
-    getIncomes = async () => {
-        const res = await axios.get(`${this._URL}/incomes.json`)
+        const res = await axios.get(`${this._URL}/${type}.json`)
         if (res.status !== 200) {
             throw new Error('Something went wrong')
         }
         return res
     }
+    putData = async (id,item,type) => {
 
-    putIncome = async (id,item) => {
-        const res = await axios.put(`${this._URL}/incomes/${id}.json`,item)
+        const res = await axios.put(`${this._URL}/${type}/${id}.json`,item)
         if (res.status !== 200) {
             throw new Error('Something went wrong')
+
         }
         return res
     }
+    deleteData = async (id,type) => {
 
-    deleteIncome = async (id) => {
-        const res = await axios.delete(`${this._URL}/incomes/${id}.json`)
+        const res = await axios.delete(`${this._URL}/${type}/${id}.json`)
         if (res.status !== 200) {
             throw new Error('Something went wrong')
         }

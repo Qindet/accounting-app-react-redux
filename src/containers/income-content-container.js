@@ -2,7 +2,7 @@ import React, {useEffect} from "react";
 import {connect} from 'react-redux'
 import TableUI from "../components/UI/table-ui";
 import {loadDeletedIncome} from "../actions";
-import {fetchIncomes} from "../actions/money-operations";
+import {fetchIncomes} from "../actions/income";
 import Spinner from "../components/spinner";
 
 const IncomeContentContainer = (props) => {
@@ -22,7 +22,7 @@ const IncomeContentContainer = (props) => {
 
 const mapStateToProps = ({incomeItems,loading}) => {
     return {
-        incomeItems,
+        incomeItems:incomeItems,
         loading
     }
 }

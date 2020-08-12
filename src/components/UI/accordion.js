@@ -33,7 +33,7 @@ function AccordionList(props) {
                 </AccordionSummary>
                 <AccordionDetails>
                     <Typography component={'ul'}>
-                            {props.incomeItems.map((item) =><li>{item.value} rub from {item.name} at {item.date}</li> )}
+                            {props.incomeItems.map((item) =><li key={item.id}>{item.value} rub from {item.name} at {item.date}</li> )}
                     </Typography>
                 </AccordionDetails>
             </Accordion>
@@ -47,7 +47,7 @@ function AccordionList(props) {
                 </AccordionSummary>
                 <AccordionDetails>
                     <Typography component={'ul'}>
-                            {props.expenseItems.map((item) =><li>{item.value} rub spend {item.name} at {item.date}</li> )}
+                            {props.expenseItems.map((item) =><li key={item.id}>{item.value} rub spend {item.name} at {item.date}</li> )}
                     </Typography>
                 </AccordionDetails>
             </Accordion>

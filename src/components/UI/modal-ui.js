@@ -7,7 +7,8 @@ import Button from '@material-ui/core/Button';
 import {Input} from "@material-ui/core";
 import { InputLabel } from '@material-ui/core';
 import {connect} from 'react-redux'
-import {addExpense, addIncome, loadIncome, updateExpense, loadUpdatedIncome} from "../../actions/money-operations";
+import {loadExpense, loadUpdatedExpense} from "../../actions/expense";
+import {loadUpdatedIncome,loadIncome} from '../../actions/income'
 
 const useStyles = makeStyles((theme) => ({
     modal: {
@@ -64,22 +65,27 @@ function ModalUI(props) {
     const handleClose = () => {
         setOpen(false);
     };
-    const onSubmitAction = (e,{loadIncome,loadUpdatedIncome}) => {
+    const onSubmitAction = (e,{loadIncome,loadUpdatedIncome,loadExpense,loadUpdatedExpense}) => {
+
         e.preventDefault()
         if (!(modal.value.trim()) || !(modal.name.trim())) {
             return
         }
         if (props.type === 'submit') {
                 if (props.label === 'spending' && modal.value > props.balance) {
-                    setModal({...modal, label:true})
+                    loadExpense(modal)
+                    setModal({...modal,name:'', value:'', id: null})
                 } else {
                     loadIncome(modal)
-                    setModal({...modal,name:'', value:'', id: null, label:false})
+                    setModal({...modal,name:'', value:'', id: null})
                 }
         } else if (props.type === 'update') {
+
             if (props.label === 'spending' && modal.value > props.balance) {
+
+                loadUpdatedExpense(modal.id,modal)
                 setModal({...modal, label:true})
-            } else {
+            } else if (props.label === 'From')  {
                 loadUpdatedIncome(modal.id,modal)
                 setModal({...modal,label:false})
             }
@@ -107,7 +113,7 @@ function ModalUI(props) {
                     <form className={classes.paper}
                     onSubmit={(e) => {
                         if (props.label==='spending') {
-                           onSubmitAction(e,props.addExpense,props.updateExpense)
+                           onSubmitAction(e,props)
                         } else {
                            e.preventDefault()
 
@@ -146,8 +152,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         loadUpdatedIncome: (id,item) => dispatch(loadUpdatedIncome(id,item)),
-        addExpense: (item) => dispatch(addExpense(item)),
-        updateExpense: (id,item) => dispatch(updateExpense(id,item)),
+        loadExpense: (item) => dispatch(loadExpense(item)),
+        loadUpdatedExpense: (id,item) => dispatch(loadUpdatedExpense(id,item)),
         loadIncome: (item) => dispatch(loadIncome(item))
     }
 }
